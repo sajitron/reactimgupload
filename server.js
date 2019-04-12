@@ -13,6 +13,16 @@ app.post("/upload", (req, res) => {
 
   const file = req.files.file;
 
+  // remove spaces within string
+  file.name = file.name.replace(/ +/g, "");
+
+  // create random string
+  const random = Math.floor(Math.random() * 100000 + 1).toString();
+
+  // merge random string with trimmed string to create unique file names
+
+  file.name = random + file.name;
+
   file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
     if (err) {
       console.error(err);
